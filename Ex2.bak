@@ -1,0 +1,18 @@
+.include "nominal.jsim"
+
+// Inverter code
+
+.subckt inv1 Vin Vout
+VDD2 vdd2 0 3.3V
+M1 Vout Vin vdd2 vdd2 PENH sw=16 sl=1
+M2 Vout Vin 0 0 NENH sw=16 sl=1
+.ends
+
+VinA A  pulse(0, 3.3V, 5ns, 0.1ns, 0.1ns, 5ns)
+xinverter1 A inv1out inv1
+xinverter2 inv1out inv2out inv1
+xinverter3 inv2out Y inv1
+
+.tran 4ons
+.plot A
+.plot Y
